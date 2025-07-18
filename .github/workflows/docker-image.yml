@@ -29,16 +29,9 @@ jobs:
           TRIVY_CACHE_DIR: .cache
           TRIVY_DISABLE_VEX_NOTICE: true
           TRIVY_DEBUG: true
-  download:
-    runs-on: ubuntu-latest
-    steps:
-     - uses: actions/checkout@v4
-     - name: Pull the Docker image
-       run: docker pull nginx:latest
 
-  Scan:
-    runs-on: ubuntu-latest
-    steps:
-     - uses: actions/checkout@v4
-     - name: scan the Docker image
-       run: trivy image nginx:latest
+      - name: Pull the Docker image
+        run: docker pull nginx:latest
+
+      - name: scan the Docker image
+        run: trivy image nginx:latest
