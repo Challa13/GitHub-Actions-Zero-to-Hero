@@ -4,12 +4,21 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Pull the Docker image
-      run: docker pull nginx:latest
+      - uses: actions/checkout@v4
+      - name: Pull the Docker image
+        run: docker pull nginx:latest
+      
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v${{ env.TRIVY_VERSION }}
+          trivy --version
+
+      - name: Test
+        run: bats --recursive --timing --verbose-run .
+        env:
+          TRIVY_CACHE_DIR: .cache
+          TRIVY_DISABLE_VEX_NOTICE: true
+          TRIVY_DEBUG: true
