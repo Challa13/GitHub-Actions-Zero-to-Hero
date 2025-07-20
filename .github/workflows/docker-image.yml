@@ -30,9 +30,12 @@ jobs:
 
       - name: Pull the Docker image
         run: docker pull nginx:latest
-  Scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: scan the Docker image
-        run: trivy image nginx:latest --format table -o report.json
+
+      - name: Scan the Docker image
+        run: trivy image nginx:latest
+#  Scan:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: scan the Docker image
+#        run: trivy image nginx:latest --format table -o report.json
